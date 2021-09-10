@@ -26,6 +26,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.wrapper h2')?.textContent).toContain('FedEx Sign-up app is running!');
+    expect(compiled.querySelector('h1')?.textContent).toContain('FedEx Sign-up App');
   });
 });

@@ -1,1 +1,39 @@
-<p>sign-up works!</p>
+<form method="post" action="https://demo-api.now.sh/users" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="firstName" class="form-label">First name <span class="text-danger">*</span></label>
+    <input type="text" id="firstName" class="form-control" required formControlName="firstName" />
+  </div>
+  <div class="mb-3">
+    <label for="lastName" class="form-label">Last name <span class="text-danger">*</span></label>
+    <input type="text" id="lastName" class="form-control" required formControlName="lastName" />
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email address <span class="text-danger">*</span></label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      aria-describedby="email-help"
+      required
+      formControlName="email"
+    />
+    <div id="email-help" class="form-text">We'll never share your email with anyone else.</div>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+    <input
+      type="password"
+      id="password"
+      class="form-control"
+      aria-describedby="password-help"
+      required
+      pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}"
+      formControlName="password"
+    />
+    <div id="password-help" class="form-text">
+      Your password must be at least 8 characters long, contain lower and uppercase letters and shouldn't contain your
+      first or last name.
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="!signUpForm.valid">Submit</button>
+</form>
