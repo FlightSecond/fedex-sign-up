@@ -22,10 +22,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('FedEx Sign-up');
   });
 
-  it('should render title', () => {
+  it('should render the fedex image', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('FedEx Sign-up App');
+    expect(compiled.querySelector('img')?.alt).toEqual('FedEx');
   });
 });

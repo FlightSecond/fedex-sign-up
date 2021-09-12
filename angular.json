@@ -144,6 +144,13 @@
               "devServerTarget": "sign-up:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "/fedex-sign-up/",
+            "deployUrl": "/fedex-sign-up/"
+          }
         }
       }
     }

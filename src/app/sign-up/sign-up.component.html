@@ -1,39 +1,107 @@
-<form method="post" action="https://demo-api.now.sh/users" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-  <div class="mb-3">
-    <label for="firstName" class="form-label">First name <span class="text-danger">*</span></label>
-    <input type="text" id="firstName" class="form-control" required formControlName="firstName" />
+<section class="position-relative">
+  <h1>Sign-up</h1>
+
+  <form
+    class="mt-4"
+    #form
+    [formGroup]="signUpForm"
+    (ngSubmit)="onSubmit()"
+    [ngClass]="{ 'opacity-50': this.loading }"
+    *ngIf="!this.success"
+  >
+    <div class="mb-3">
+      <label for="firstName" class="form-label">First name <span class="text-danger">*</span></label>
+      <input
+        type="text"
+        id="firstName"
+        class="form-control"
+        required
+        formControlName="firstName"
+        [ngClass]="{
+          'is-valid': !firstName?.invalid,
+          'is-invalid': firstName && firstName.invalid && firstName.touched
+        }"
+      />
+      <div *ngIf="firstName && firstName.invalid && firstName.touched" class="form-text text-danger" role="alert">
+        <div *ngIf="firstName.errors?.required">First name is required.</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="lastName" class="form-label">Last name <span class="text-danger">*</span></label>
+      <input
+        type="text"
+        id="lastName"
+        class="form-control"
+        required
+        formControlName="lastName"
+        [ngClass]="{ 'is-valid': !lastName?.invalid, 'is-invalid': lastName && lastName.invalid && lastName.touched }"
+      />
+      <div *ngIf="lastName && lastName.invalid && lastName.touched" class="form-text text-danger" role="alert">
+        <div *ngIf="lastName.errors?.required">Last name is required.</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address <span class="text-danger">*</span></label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        aria-describedby="email-help"
+        required
+        formControlName="email"
+        [ngClass]="{ 'is-valid': !email?.invalid, 'is-invalid': email && email.invalid && email.touched }"
+      />
+      <div *ngIf="email && email.invalid && email.touched" class="form-text text-danger" role="alert">
+        <div *ngIf="email.errors?.required">Email is required.</div>
+        <div *ngIf="email.errors?.email">Please type the correct email.</div>
+      </div>
+      <div id="email-help" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+      <input
+        type="password"
+        id="password"
+        class="form-control"
+        aria-describedby="password-help"
+        required
+        pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}"
+        formControlName="password"
+        [ngClass]="{ 'is-valid': !password?.invalid, 'is-invalid': password && password.invalid && password.touched }"
+      />
+      <div *ngIf="password && password.invalid && password.touched" class="form-text text-danger" role="alert">
+        <div *ngIf="password.errors?.required">Password is required.</div>
+        <div *ngIf="password.errors?.pattern">
+          Your password must be at least 8 characters long, contain at least one lower and one uppercase latin letter.
+        </div>
+        <div *ngIf="password.errors?.forbiddenStrings">Your password shouldn't contain your first or last name.</div>
+      </div>
+      <div id="password-help" class="form-text" *ngIf="password && (!password.touched || !password.invalid)">
+        Your password must be at least 8 characters long, contain at least one lower and one uppercase latin letter and
+        shouldn't contain your first or last name.
+      </div>
+    </div>
+    <button
+      type="submit"
+      class="btn"
+      [ngClass]="signUpForm.valid ? 'btn-primary' : 'btn-secondary'"
+      [disabled]="this.loading || this.success"
+    >
+      Sign up
+    </button>
+  </form>
+  <div *ngIf="this.apiError && !this.loading" class="alert alert-danger mt-3">
+    Something went wrong. Please try again later.
   </div>
-  <div class="mb-3">
-    <label for="lastName" class="form-label">Last name <span class="text-danger">*</span></label>
-    <input type="text" id="lastName" class="form-control" required formControlName="lastName" />
-  </div>
-  <div class="mb-3">
-    <label for="email" class="form-label">Email address <span class="text-danger">*</span></label>
-    <input
-      type="email"
-      class="form-control"
-      id="email"
-      aria-describedby="email-help"
-      required
-      formControlName="email"
-    />
-    <div id="email-help" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div class="mb-3">
-    <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-    <input
-      type="password"
-      id="password"
-      class="form-control"
-      aria-describedby="password-help"
-      required
-      pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}"
-      formControlName="password"
-    />
-    <div id="password-help" class="form-text">
-      Your password must be at least 8 characters long, contain lower and uppercase letters and shouldn't contain your
-      first or last name.
+
+  <div class="position-absolute top-50 start-50 translate-middle">
+    <div class="spinner-border" role="status" *ngIf="this.loading">
+      <span class="visually-hidden">Loading...</span>
     </div>
   </div>
-  <button type="submit" class="btn btn-primary" [disabled]="!signUpForm.valid">Submit</button>
-</form>
+
+  <div *ngIf="this.success">
+    <div class="alert alert-success" role="alert">You are successfully signed up. Thank you!</div>
+    <button type="button" class="mt-2 btn btn-primary" (click)="this.onReset()">Sign up another person</button>
+  </div>
+</section>

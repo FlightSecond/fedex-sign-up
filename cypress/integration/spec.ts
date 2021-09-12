@@ -1,6 +1,6 @@
 describe('My First Test', () => {
   it('Visits the initial project page', () => {
     cy.visit('/');
-    cy.contains('FedEx Sign-up App');
+    cy.contains('Sign-up');
   });
 });
