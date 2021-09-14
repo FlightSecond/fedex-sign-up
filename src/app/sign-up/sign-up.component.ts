@@ -1,27 +1,17 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
-import { SignUpService } from '../services/sign-up.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
+import { SignUpService } from '../services/sign-up.service';
 import { SignUpApiResponse } from '../services/sign-up-data.type';
-import { HttpErrorResponse } from '@angular/common/http';
+import { forbiddenStringsValidator } from '../helpers/forbiddenStringsValidator';
 
 const passwordInitialValidators = [
   Validators.required,
   Validators.minLength(8),
   Validators.pattern('(?=.*[a-z])(?=.*[A-Z]).{8,}'),
 ];
-
-const forbiddenStringsValidator =
-  (strings: string[]): ValidatorFn =>
-  (control: AbstractControl): ValidationErrors | null => {
-    if (!strings || strings.length === 0 || !control.value) {
-      return null;
-    }
-    const stringsFound = !!strings.find((stringItem) => control.value.indexOf(stringItem) !== -1);
-
-    return stringsFound ? { forbiddenStrings: { value: control.value } } : null;
-  };
 
 @Component({
   selector: 'app-sign-up',
@@ -68,7 +58,6 @@ export class SignUpComponent implements OnInit {
 
     // Checking the Angular validators
     if (this.signUpForm.valid) {
-      this.signUpForm.controls['password'].disable();
       this.loading = true;
       this.success = false;
 
@@ -79,7 +68,6 @@ export class SignUpComponent implements OnInit {
           // can be done here if the API can be potentially overloaded
           catchError((error: HttpErrorResponse) => {
             this.apiError = true;
-            this.signUpForm.controls['password'].enable();
             // Custom error handler can be done in separate service to throw an error to Sentry
             return throwError(`Sign-up API error: ${error.message}`);
           }),
