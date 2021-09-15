@@ -1,31 +1,37 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { Component } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
+@Component({ selector: 'app-sign-up', template: '' })
+class SignUpComponent {}
+
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let appComponent: AppComponent;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [AppComponent],
+      declarations: [AppComponent, SignUpComponent],
     }).compileComponents();
-  });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    fixture = TestBed.createComponent(AppComponent);
+    appComponent = fixture.componentInstance;
   });
 
   it(`should have as title 'FedEx Sign-up'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('FedEx Sign-up');
+    expect(appComponent.title).toBe('FedEx Sign-up');
   });
 
-  it('should render the fedex image', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('img')?.alt).toEqual('FedEx');
+  it('should have the logo', () => {
+    const logo = fixture.nativeElement.querySelector('img');
+
+    expect(logo.src).toContain('assets/images/logo.png');
+    expect(logo.alt).toBe('FedEx');
+    expect(logo.width).toBe(88);
+    expect(logo.height).toBe(25);
+  });
+
+  it('should contain sign up component', () => {
+    expect(fixture.nativeElement.querySelector('app-sign-up')).toBeDefined();
   });
 });

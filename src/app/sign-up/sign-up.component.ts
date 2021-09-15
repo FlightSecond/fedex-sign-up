@@ -57,32 +57,38 @@ export class SignUpComponent implements OnInit {
     this.apiError = false;
 
     // Checking the Angular validators
-    if (this.signUpForm.valid) {
-      this.loading = true;
-      this.success = false;
+    if (!this.signUpForm.valid) {
+      return;
+    }
 
-      this.signUpService
-        .postSignUpData(this.signUpForm.value)
-        .pipe(
-          // retryWhen with geometric / exponential delay
-          // can be done here if the API can be potentially overloaded
-          catchError((error: HttpErrorResponse) => {
-            this.apiError = true;
-            // Custom error handler can be done in separate service to throw an error to Sentry
-            return throwError(`Sign-up API error: ${error.message}`);
-          }),
-          finalize(() => {
-            this.loading = false;
-          })
-        )
-        .subscribe((data: SignUpApiResponse) => {
+    this.loading = true;
+    this.success = false;
+
+    this.signUpService
+      .postSignUpData(this.signUpForm.value)
+      .pipe(
+        // retryWhen with geometric / exponential delay
+        // can be done here if the API can be potentially overloaded
+
+        // Custom error handler can be done in separate service to throw an error to Sentry
+        catchError((error: HttpErrorResponse) => throwError(`Sign-up API error: ${error.message}`)),
+
+        finalize(() => {
+          this.loading = false;
+        })
+      )
+      .subscribe(
+        (data: SignUpApiResponse) => {
           // Possible next step: passing the subscriber ID to the database
-          console.log(data._id);
+          console.info(`Returned id: ${data._id}`);
           this.success = true;
           this.signUpForm.disable();
           return;
-        });
-    }
+        },
+        () => {
+          this.apiError = true;
+        }
+      );
   }
 
   onReset(): void {
