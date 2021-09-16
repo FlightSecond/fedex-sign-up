@@ -15,22 +15,22 @@ describe('forbiddenStringsValidator', () => {
     expect(checkForbiddenStrings(fakeAbstractControl as AbstractControl, ['string with additional text'])).toBeNull();
   });
 
-  it('should return the forbiddenStringsFound boolean if string found', () => {
+  it('should return the forbiddenStrings boolean if string found', () => {
     const fakeAbstractControl = { value: 'Lorem ipsum' };
 
     expect(checkForbiddenStrings(fakeAbstractControl as AbstractControl, ['Lorem ipsum'])).toEqual({
-      forbiddenStringsFound: true,
+      forbiddenStrings: true,
     });
     expect(checkForbiddenStrings(fakeAbstractControl as AbstractControl, ['Lorem'])).toEqual({
-      forbiddenStringsFound: true,
+      forbiddenStrings: true,
     });
     expect(checkForbiddenStrings(fakeAbstractControl as AbstractControl, ['Lorem', 'ipsum'])).toEqual({
-      forbiddenStringsFound: true,
+      forbiddenStrings: true,
     });
     expect(
       checkForbiddenStrings(fakeAbstractControl as AbstractControl, ['other', 'string1', 'string2', 'ipsum'])
     ).toEqual({
-      forbiddenStringsFound: true,
+      forbiddenStrings: true,
     });
   });
 

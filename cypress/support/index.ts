@@ -1,17 +1,21 @@
-// ***********************************************************
-// This example support/index.js is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
+import './commands';
 
-// When a command from ./commands is ready to use, import with `import './commands'` syntax
-// import './commands';
+beforeEach(() => {
+  cy.visit('/');
+
+  cy.getByTestId('sign-up-form').as('form');
+
+  cy.get('@form').getByTestId('first-name-label').as('firstNameLabel');
+  cy.get('@form').getByTestId('first-name').as('firstNameInput');
+
+  cy.get('@form').getByTestId('last-name-label').as('lastNameLabel');
+  cy.get('@form').getByTestId('last-name').as('lastNameInput');
+
+  cy.get('@form').getByTestId('email-label').as('emailLabel');
+  cy.get('@form').getByTestId('email').as('emailInput');
+
+  cy.get('@form').getByTestId('password-label').as('passwordLabel');
+  cy.get('@form').getByTestId('password').as('passwordInput');
+
+  cy.get('@form').getByTestId('submit-button').as('submitButton');
+});

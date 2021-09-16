@@ -1,0 +1,3 @@
+{
+  "body": "{\n  firstName: \"John\",\n  lastName: \"Doe\",\n  email: \"john.doe@mail.com\"\n}"
+}

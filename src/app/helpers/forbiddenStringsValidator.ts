@@ -6,7 +6,7 @@ export const checkForbiddenStrings = (control: AbstractControl, strings: string[
   }
   const stringsFound = !!strings.find((stringItem) => control.value.indexOf(stringItem) !== -1);
 
-  return stringsFound ? { forbiddenStringsFound: true } : null;
+  return stringsFound ? { forbiddenStrings: true } : null;
 };
 
 export const forbiddenStringsValidator =

@@ -8,12 +8,16 @@
     (ngSubmit)="onSubmit()"
     [ngClass]="{ 'opacity-50': this.loading }"
     *ngIf="!this.success"
+    data-testid="sign-up-form"
   >
     <div class="mb-3">
-      <label for="firstName" class="form-label">First name <span class="text-danger">*</span></label>
+      <label for="firstName" class="form-label" data-testid="first-name-label"
+        >First name <span class="text-danger">*</span></label
+      >
       <input
         type="text"
         id="firstName"
+        data-testid="first-name"
         class="form-control"
         required
         formControlName="firstName"
@@ -22,26 +26,41 @@
           'is-invalid': firstName && firstName.invalid && firstName.touched
         }"
       />
-      <div *ngIf="firstName && firstName.invalid && firstName.touched" class="form-text text-danger" role="alert">
+      <div
+        *ngIf="firstName && firstName.invalid && firstName.touched"
+        class="form-text text-danger"
+        role="alert"
+        data-testid="first-name-errors"
+      >
         <div *ngIf="firstName.errors?.required">First name is required.</div>
       </div>
     </div>
     <div class="mb-3">
-      <label for="lastName" class="form-label">Last name <span class="text-danger">*</span></label>
+      <label for="lastName" class="form-label" data-testid="last-name-label"
+        >Last name <span class="text-danger">*</span></label
+      >
       <input
         type="text"
         id="lastName"
+        data-testid="last-name"
         class="form-control"
         required
         formControlName="lastName"
         [ngClass]="{ 'is-valid': !lastName?.invalid, 'is-invalid': lastName && lastName.invalid && lastName.touched }"
       />
-      <div *ngIf="lastName && lastName.invalid && lastName.touched" class="form-text text-danger" role="alert">
+      <div
+        *ngIf="lastName && lastName.invalid && lastName.touched"
+        class="form-text text-danger"
+        role="alert"
+        data-testid="last-name-errors"
+      >
         <div *ngIf="lastName.errors?.required">Last name is required.</div>
       </div>
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label">Email address <span class="text-danger">*</span></label>
+      <label for="email" class="form-label" data-testid="email-label"
+        >Email address <span class="text-danger">*</span></label
+      >
       <input
         type="email"
         class="form-control"
@@ -50,18 +69,27 @@
         required
         formControlName="email"
         [ngClass]="{ 'is-valid': !email?.invalid, 'is-invalid': email && email.invalid && email.touched }"
+        data-testid="email"
       />
-      <div *ngIf="email && email.invalid && email.touched" class="form-text text-danger" role="alert">
+      <div
+        *ngIf="email && email.invalid && email.touched"
+        class="form-text text-danger"
+        role="alert"
+        data-testid="email-errors"
+      >
         <div *ngIf="email.errors?.required">Email is required.</div>
         <div *ngIf="email.errors?.email">Please type the correct email.</div>
       </div>
       <div id="email-help" class="form-text">We'll never share your email with anyone else.</div>
     </div>
     <div class="mb-3">
-      <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+      <label for="password" class="form-label" data-testid="password-label"
+        >Password <span class="text-danger">*</span></label
+      >
       <input
         type="password"
         id="password"
+        data-testid="password"
         class="form-control"
         aria-describedby="password-help"
         required
@@ -69,7 +97,12 @@
         formControlName="password"
         [ngClass]="{ 'is-valid': !password?.invalid, 'is-invalid': password && password.invalid && password.touched }"
       />
-      <div *ngIf="password && password.invalid && password.touched" class="form-text text-danger" role="alert">
+      <div
+        *ngIf="password && password.invalid && password.touched"
+        class="form-text text-danger"
+        role="alert"
+        data-testid="password-errors"
+      >
         <div *ngIf="password.errors?.required">Password is required.</div>
         <div *ngIf="password.errors?.pattern">
           Your password must be at least 8 characters long, contain at least one lower and one uppercase latin letter.
@@ -86,23 +119,26 @@
       class="btn"
       [ngClass]="signUpForm.valid ? 'btn-primary' : 'btn-secondary'"
       [disabled]="this.loading || this.success"
+      data-testid="submit-button"
     >
       Sign up
     </button>
   </form>
 
-  <div *ngIf="this.apiError && !this.loading" class="alert alert-danger mt-3">
+  <div *ngIf="this.apiError && !this.loading" class="alert alert-danger mt-3" data-testid="api-error">
     Something went wrong. Please try again later.
   </div>
 
-  <div class="position-absolute top-50 start-50 translate-middle">
-    <div class="spinner-border" role="status" *ngIf="this.loading">
+  <div *ngIf="this.loading" class="position-absolute top-50 start-50 translate-middle" data-testid="loading">
+    <div class="spinner-border" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 
-  <div *ngIf="this.success">
+  <div *ngIf="this.success" data-testid="success">
     <div class="alert alert-success" role="alert">You are successfully signed up. Thank you!</div>
-    <button type="button" class="mt-2 btn btn-primary" (click)="this.onReset()">Sign up another person</button>
+    <button type="button" class="mt-2 btn btn-primary" (click)="this.onReset()" data-testid="repeat-button">
+      Sign up another person
+    </button>
   </div>
 </section>

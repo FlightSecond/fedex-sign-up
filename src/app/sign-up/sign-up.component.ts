@@ -56,6 +56,9 @@ export class SignUpComponent implements OnInit {
     this.form?.nativeElement.reportValidity();
     this.apiError = false;
 
+    // Triggering the angular validation
+    this.signUpForm.markAllAsTouched();
+
     // Checking the Angular validators
     if (!this.signUpForm.valid) {
       return;
