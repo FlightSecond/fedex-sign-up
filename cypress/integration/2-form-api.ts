@@ -69,7 +69,7 @@ describe('Form API', () => {
 
     cy.intercept('POST', 'https://demo-api.now.sh/users', { _id: 'fakeUserId123' }).as('getUsers');
 
-    cy.get('@submitButton').click();
+    cy.getByTestId('submit-button').click();
 
     cy.get('@getUsers').its('request.body').should('deep.equal', postRequestData);
     cy.getByTestId('success').should('exist');

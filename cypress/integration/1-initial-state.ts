@@ -12,19 +12,19 @@ describe('Initial page', () => {
 
 describe('Initial form', () => {
   it('should have correct fields', () => {
-    cy.get('@firstNameInput')
+    cy.getByTestId('first-name')
       .should('have.value', '')
       .should('have.attr', 'type', 'text')
       .should('have.attr', 'required', 'required');
-    cy.get('@lastNameInput')
+    cy.getByTestId('last-name')
       .should('have.value', '')
       .should('have.attr', 'type', 'text')
       .should('have.attr', 'required', 'required');
-    cy.get('@emailInput')
+    cy.getByTestId('email')
       .should('have.value', '')
       .should('have.attr', 'type', 'email')
       .should('have.attr', 'required', 'required');
-    cy.get('@passwordInput')
+    cy.getByTestId('password')
       .should('have.value', '')
       .should('have.attr', 'type', 'password')
       .should('have.attr', 'required', 'required')
@@ -32,18 +32,18 @@ describe('Initial form', () => {
   });
 
   it('should have submit button', () => {
-    cy.get('@submitButton').should('contain.text', 'Sign up');
+    cy.getByTestId('submit-button').should('contain.text', 'Sign up');
   });
 
   it('should have correct labels', () => {
-    cy.get('@form').find('label[for="firstName"]').should('contain.text', 'First name *');
-    cy.get('@form').find('label[for="lastName"]').should('contain.text', 'Last name *');
-    cy.get('@form').find('label[for="email"]').should('contain.text', 'Email address *');
-    cy.get('@form').find('label[for="password"]').should('contain.text', 'Password *');
+    cy.getByTestId('sign-up-form').find('label[for="firstName"]').should('contain.text', 'First name *');
+    cy.getByTestId('sign-up-form').find('label[for="lastName"]').should('contain.text', 'Last name *');
+    cy.getByTestId('sign-up-form').find('label[for="email"]').should('contain.text', 'Email address *');
+    cy.getByTestId('sign-up-form').find('label[for="password"]').should('contain.text', 'Password *');
   });
 
   it('should have correct hints', () => {
-    cy.get('@form')
+    cy.getByTestId('sign-up-form')
       .should('contain.text', "We'll never share your email with anyone else.")
       .should(
         'contain.text',

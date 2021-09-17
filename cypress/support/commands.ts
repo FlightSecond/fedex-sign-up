@@ -24,9 +24,9 @@ Cypress.Commands.add('getByTestId', (value) => {
 });
 
 Cypress.Commands.add('submitForm', (user) => {
-  cy.get('@firstNameInput').type(user.firstName);
-  cy.get('@lastNameInput').type(user.lastName);
-  cy.get('@emailInput').type(user.email);
-  cy.get('@passwordInput').type(user.password);
-  cy.get('@submitButton').click();
+  cy.getByTestId('first-name').type(user.firstName);
+  cy.getByTestId('last-name').type(user.lastName);
+  cy.getByTestId('email').type(user.email);
+  cy.getByTestId('password').type(user.password);
+  cy.getByTestId('submit-button').click();
 });
