@@ -5,7 +5,7 @@
 ### Technical choices
 
 - The validation is done in three levels:
-  - Native HTML5 validation covers the required fields / email / password regexp validation and is showing the native interface (using the system language of the user). It also scrolls to the first invalid field out-of-box which is very useful on mobile devices.
+  - Native HTML5 validation covers the required fields / email / password regexp validation and is showing the native interface (using the system language of the user). It also scrolls to the first invalid field out-of-box which is very useful on mobile devices. _The email validation allows emails without dots as according to the [specification](https://en.wikipedia.org/wiki/Email_address#Examples), it's a valid email_.
   - Angular built-in validators if the HTML5 validators fail.
   - Angular custom validator to check the password for the user's first or last name.
     - The negative lookahead assertion combined with `Validators.pattern` can be also used without writing a custom validator as a second option. But it can be harder to understand and support.
